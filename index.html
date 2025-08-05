@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio Arthur Deboni</title>
+    <link rel="icon" href="icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Custom tech styles */
+        :root {
+            --neon-blue: #00f2fe;
+            --neon-purple: #4facfe;
+            --circuit-color: rgba(79, 145, 255, 0.05);
+
+            --primary: #4f91ff;
+            --primary-dark: #3568e0;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        .dark {
+            --primary: #6ba5ff;
+            --primary-dark: #4a7cee;
+            --dark: #f8fafc;
+            --light: #1e293b;
+        }
+
+        body {
+            transition: all 0.3s ease;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(79, 145, 255, 0.95) 0%, rgba(115, 117, 253, 0.9) 100%);
+        }
+
+        .project-item {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .project-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(79, 145, 255, 0.3);
+        }
+
+        .modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        /* Tech animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: var(--neon-blue)
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .tech-grid-bg {
+            background-image:
+                linear-gradient(var(--circuit-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--circuit-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: -20px -20px;
+        }
+
+        .tech-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes spinOnce {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-spin-once {
+            animation: spinOnce 0.5s ease-out;
+        }
+
+        /* Project animations */
+        .project-image-hover {
+            transition: transform 0.5s ease;
+        }
+
+        .project-image-hover:hover {
+            transform: scale(1.05);
+        }
+
+        .bg-grid-pattern {
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .project-item {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .project-item:hover {
+            border-color: var(--primary);
+            background-color: rgba(79, 145, 255, 0.05);
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-item::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(79, 145, 255, 0.2) 0%, transparent 70%);
+            transform: rotate(25deg);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .project-item:hover::before {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-slate-900">
+    <header
+        class="fixed w-full z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-gray-200 dark:border-slate-700 transition-all duration-300 shadow-sm hover:shadow-lg">
+        <nav class="">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 flex items-center">
+                            <span id="port"
+                                class="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300 bg-clip-text text-transparent">Arthur
+                                Deboni <span class="text-blue-600 dark:text-blue-400">/</span> <span
+                                    class="text-sm font-medium text-gray-500 dark:text-gray-400">Data
+                                    Analyst</span></span>
+                        </div>
+                    </div>
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a href="#home"
+                            class="nav-link text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium">Início</a>
+                        <a href="#sobre"
+                            class="nav-link text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium">Sobre
+                            Mim</a>
+                        <a href="#formacao"
+                            class="nav-link text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium">Formação</a>
+                        <a href="#experiencia"
+                            class="nav-link text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium">Experiência</a>
+                        <a href="#projetos"
+                            class="nav-link text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium">Projetos</a>
+                        <a href="#contato"
+                            class="nav-link text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium">Contato</a>
+                    </div>
+                    <div class="-mr-2 flex items-center md:hidden">
+                        <button id="mobile-menu-button"
+                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-800">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="#home"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400">Início</a>
+                    <a href="#sobre"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400">Sobre
+                        Mim</a>
+                    <a href="#formacao"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400">Formação</a>
+                    <a href="#experiencia"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400">Experiência</a>
+                    <a href="#projetos"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400">Projetos</a>
+                    <a href="#contato"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400">Contato</a>
+                    <div class="px-3 py-2">
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-16">
+        <section id="home"
+            class="hero-gradient min-h-screen flex items-center justify-center text-white relative overflow-hidden">
+            <div class="absolute inset-0 opacity-90">
+                <div class="absolute inset-0 bg-grid-pattern"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-blue-500/30 to-blue-600/50"></div>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-10">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"><span id="typing-text"
+                                class="inline-block border-r-4 border-blue-500 pr-2"></span><span
+                                class="text-yellow-300">Arthur Deboni</span></h1>
+                        <p class="text-xl md:text-2xl mb-8">Um <span class="font-semibold">Analista de Dados</span>
+                            apaixonado por transformar dados em insights acionáveis.</p>
+                        <div
+                            class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 space-x-0 sm:space-x-4">
+                            <a href="#projetos"
+                                class="bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold text-lg shadow-lg transform transition hover:scale-105">Veja
+                                meus projetos</a>
+                            <a href="#contato"
+                                class="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-6 py-3 rounded-lg font-semibold text-lg shadow-lg transform transition hover:scale-105">Fale
+                                comigo</a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center">
+                        <div class="relative floating">
+                            <div class="relative">
+                                <div
+                                    class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 blur-md animate-pulse opacity-50">
+                                </div>
+                                <img src="foto_portfolio_cartoon.png" alt="Data Analysis Illustration"
+                                    class="w-72 h-75 rounded-full object-cover border-4 border-white dark:border-slate-800 shadow-2xl relative z-10">
+                            </div>
+                            <div class="absolute -bottom-5 -right-5 bg-blue-600 p-4 rounded-lg shadow-lg z-20">
+                                <div class="flex items-center">
+                                    <div class="mr-3 p-2 bg-blue-500 rounded-full">
+                                        <i class="fas fa-database text-white"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-blue-100">Especialista em</p>
+                                        <p class="font-bold text-white">Análise e Visualização</p>
+                                        <p class="font-bold text-white">de Dados</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <a href="#sobre" class="text-white">
+                    <i class="fas fa-chevron-down text-3xl"></i>
+                </a>
+            </div>
+        </section>
+
+        <section id="sobre" class="py-20 bg-white dark:bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-16 text-slate-800 dark:text-white">
+                    <span class="border-b-4 border-blue-600 pb-2">Sobre Mim</span>
+                </h2>
+                <div class="flex flex-col lg:flex-row items-center lg:items-start gap-10">
+                    <div class="lg:w-1/3 flex justify-center">
+                        <div class="relative">
+                            <img src="foto_perfil.JPEG" alt="Foto de Arthur-Deboni"
+                                class="w-72 h-75 md:w-85 md:h-80 rounded-full object-cover border-4 border-blue-500 shadow-xl">
+                            <div
+                                class="absolute -bottom-5 -right-5 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg border border-blue-200 dark:border-slate-700">
+                                <div class="flex items-center">
+                                    <div class="mr-3 p-2 bg-blue-100 dark:bg-blue-800 rounded-full">
+                                        <i class="fas fa-graduation-cap text-blue-600 dark:text-blue-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-slate-600 dark:text-slate-300">Formando em</p>
+                                        <p class="font-bold text-slate-800 dark:text-white">Ciência da Computação</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-2/3">
+                        <p class="text-lg mb-6 text-slate-700 dark:text-slate-300">Olá! Sou Arthur Deboni, um analista
+                            de dados com 1 ano de experiência em ajudar empresas a tomar decisões mais inteligentes
+                            através da análise de grandes volumes de dados. Minha paixão é encontrar padrões, tendências
+                            e insights que podem impulsionar o crescimento e a eficiência. Sou proficiente em
+                            ferramentas como Python, SQL, Power BI, Looker Studio, Excel e Sheets.</p>
+                        <p class="text-lg mb-6 text-slate-700 dark:text-slate-300">Acredito que a chave para uma boa
+                            análise de dados reside não apenas na habilidade técnica, mas também na capacidade de
+                            comunicar resultados complexos de forma clara e concisa para diferentes públicos. Estou
+                            sempre buscando aprender novas tecnologias e metodologias para aprimorar minhas habilidades
+                            e entregar resultados cada vez melhores.</p>
+
+                        <div class="mt-10">
+                            <h3 class="text-xl font-semibold mb-4 text-slate-800 dark:text-white">Habilidades Técnicas
+                            </h3>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    <span class="text-slate-700 dark:text-slate-300">Python</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    <span class="text-slate-700 dark:text-slate-300">SQL</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    <span class="text-slate-700 dark:text-slate-300">Power BI</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    <span class="text-slate-700 dark:text-slate-300">Looker Studio</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    <span class="text-slate-700 dark:text-slate-300">Excel/Sheets</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    <span class="text-slate-700 dark:text-slate-300">ETL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="formacao" class="py-20 bg-gray-50 dark:bg-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-16 text-slate-800 dark:text-white">
+                    <span class="border-b-4 border-blue-600 pb-2">Formação Acadêmica</span>
+                </h2>
+
+                <div class="space-y-12">
+                    <div class="education-item bg-white dark:bg-slate-700 rounded-xl p-8 shadow-lg">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between md:space-x-6">
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 text-blue-600 dark:text-blue-400">Bacharelado em
+                                    Ciência da Computação</h3>
+                                <p class="text-white"><strong class="text-slate-800 dark:text-slate-200">Universidade
+                                        Veiga de Almeida (UVA)</strong> | 2023 - 2025</p>
+                                <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+                                    <li>Disciplinas de computação, tecnologia, modelagem, estatística, programação, BI,
+                                        ética de trabalho, entre outras.</li>
+                                    <li>CR 9.1/10</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 md:mt-0 md:text-right">
+                                <div
+                                    class="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold">
+                                    <i class="fas fa-graduation-cap mr-2"></i>
+                                    Graduação
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="education-item bg-white dark:bg-slate-700 rounded-xl p-8 shadow-lg">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between md:space-x-6">
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 text-blue-600 dark:text-blue-400">Licenciatura em
+                                    Ciência da Computação</h3>
+                                <p class="text-white"><strong class="text-slate-800 dark:text-slate-200">Universidade
+                                        do Minho (UMinho - Portugal)</strong> | 2025 - 2027</p>
+                                <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+                                    <li>Tive a oportunidade de concluir minha graduação em uma universidade europeia.
+                                    </li>
+                                    <li>Cursei disciplinas com enfoque em matemática computacional e estatística
+                                        aplicada.</li>
+                                    <li>Membro da Associação Acadêmica da Universidade do Minho</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 md:mt-0 md:text-right">
+                                <div
+                                    class="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold">
+                                    <i class="fas fa-globe-europe mr-2"></i>
+                                    Internacional
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="education-item bg-white dark:bg-slate-700 rounded-xl p-8 shadow-lg">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between md:space-x-6">
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 text-blue-600 dark:text-blue-400">Curso de Inglês
+                                </h3>
+                                <p class="text-white"><strong class="text-slate-800 dark:text-slate-200">CEI Centro de
+                                        Idiomas</strong> | 2018 - 2020</p>
+                                <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+                                    <li>Conclui formação em inglês geral com nível avançado.</li>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 md:mt-0 md:text-right">
+                                <div
+                                    class="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold">
+                                    <i class="fas fa-globe-europe mr-2"></i>
+                                    Línguas
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experiencia" class="py-20 bg-white dark:bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-16 text-slate-800 dark:text-white">
+                    <span class="border-b-4 border-blue-600 pb-2">Experiência Profissional</span>
+                </h2>
+
+                <div class="space-y-12">
+                    <div class="experience-item bg-gray-50 dark:bg-slate-800 rounded-xl p-8 shadow-lg">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-bold mb-2 text-blue-600 dark:text-blue-400">Estagiário de Dados
+                                    e Perfomance</h3>
+                                <p class="text-white"><strong class="text-white">Americanas
+                                        SA.</strong> | 2024 - 2025</p>
+                                <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+                                    <li>Extração, transformação e carregamento (ETL) de dados de múltiplas fontes,
+                                        utilizando SQL, Python e Excel.</li>
+                                    <li>Desenvolvimento de dashboards interativos em Looker Studio para visualização e
+                                        acompanhamento de
+                                        KPIs.</li>
+                                    <li>Mapeamento e Otimização de Processos.</li>
+                                    <li>Implementação de Soluções Tech e Automatizadas para serviços operacionais.</li>
+                                    <li>Formulação de POPs e Diretrizes da companhia.</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 md:mt-0 md:ml-8">
+                                <img src="americanas-sa.png" alt="Americanas SA Logo" class="w-40 h-auto opacity-80">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="projetos" class="py-20 bg-gray-50 dark:bg-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-16 text-slate-800 dark:text-white">
+                    <span class="border-b-4 border-blue-600 pb-2">Meus Projetos (Em construção 🚧)</span>
+                </h2>
+
+                <div class="mb-12">
+                    <h3 class="text-2xl font-semibold mb-8 text-slate-800 dark:text-white">
+                        <i class="fas fa-briefcase mr-3 text-blue-600"></i>Projetos Profissionais
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Projeto 1 -->
+                        <div
+                            class="project-item bg-white dark:bg-slate-700 rounded-xl p-6 shadow-md hover:shadow-xl transform transition duration-500 hover:-translate-y-2">
+                            <div class="flex items-start mb-4">
+                                <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-chart-line text-blue-600 dark:text-blue-400 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-slate-800 dark:text-white">Gestão à vista
+                                        Suprimentos
+                                    </h4>
+                                    <p class="text-slate-600 dark:text-slate-300 text-sm">Americanas SA (2025)</p>
+                                </div>
+                            </div>
+                            <p class="text-slate-700 dark:text-slate-300 mb-4">Dashboard interativo para monitoramento
+                                de KPIs de suprimentos, desenvolvido em Looker Studio com integração de APIs e
+                                automações em Python.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span
+                                    class="bg-blue-100 dark:bg-blue-900 text-blue+800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Python</span>
+                                <span
+                                    class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">API</span>
+                                <span
+                                    class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Sheets</span>
+                                <span
+                                    class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Looker
+                                    Studio</span>
+                                <span
+                                    class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Excel</span>
+                                <span
+                                    class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">VBA</span>
+                            </div>
+                            <button
+                                class="project-detail-btn w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                                data-modal="modal-projeto-1">
+                                <i class="fas fa-info-circle mr-2"></i> Ver Detalhes
+                            </button>
+                        </div>
+
+                        <!-- Projeto 2 -->
+                        <div
+                            class="project-item bg-white dark:bg-slate-700 rounded-xl p-6 shadow-md hover:shadow-xl transform transition duration-500 hover:-translate-y-2">
+                            <div class="flex items-start mb-4">
+                                <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-money-bill-trend-up text-blue-600 dark:text-blue-400 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-slate-800 dark:text-white">Dashboard de Serviços
+                                        CSC</h4>
+                                    <p class="text-slate-600 dark:text-slate-300 text-sm">Americanas SA (2025)</p>
+                                </div>
+                            </div>
+                            <p class="text-slate-700 dark:text-slate-300 mb-4">Dashboard gerencial para monitoramento
+                                mensal de
+                                atingimento de metas e SLAs de serviços
+                                prestados pelas áreas da diretoria de CSC. Construído no Looker Studio com dados de
+                                áreas externas.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span
+                                    class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Excel</span>
+                                <span
+                                    class="bg-blue+100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Sheets</span>
+                                <span
+                                    class="bg-blue+100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Looker
+                                    Studio</span>
+                            </div>
+                            <button
+                                class="project-detail-btn w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                                data-modal="modal-projeto-2">
+                                <i class="fas fa-info-circle mr-2"></i> Ver Detalhes
+                            </button>
+
+                            <!--Projeto 3-->
+                        </div>
+
+                        <div
+                            class="project-item bg-white dark:bg-slate-700 rounded-xl p-6 shadow-md hover:shadow-xl transform transition duration-500 hover:-translate-y-2">
+                            <div class="flex items-start mb-4">
+                                <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-money-bill-trend-up text-blue-600 dark:text-blue-400 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-slate-800 dark:text-white">Acompanhamento
+                                        Orçamentário</h4>
+                                    <p class="text-slate-600 dark:text-slate-300 text-sm">Americanas SA (2025)</p>
+                                </div>
+                            </div>
+                            <p class="text-slate-700 dark:text-slate-300 mb-4">Dashboard interativo para monitoramento
+                                financeiro
+                                da
+                                Vice-Presidência de Complianace com
+                                atualização em tempo real. Construído no Looker Studio com processo end to end (GCP -->
+                                Painel). </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span
+                                    class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">
+                                    BigQuery</span>
+                                <span
+                                    class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">GCP</span>
+                                <span
+                                    class="bg-blue+100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">SQL</span>
+                                <span
+                                    class="bg-blue+100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Looker
+                                    Studio</span>
+                            </div>
+                            <button
+                                class="project-detail-btn w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                                data-modal="modal-projeto-2">
+                                <i class="fas fa-info-circle mr-2"></i> Ver Detalhes
+                            </button>
+                        </div>
+
+                        <div
+                            class="project-item bg-white dark:bg-slate-700 rounded-xl p-6 shadow-md hover:shadow-xl transform transition duration-500 hover:-translate-y-2">
+                            <div class="flex items-start mb-4">
+                                <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-money-bill-trend-up text-blue-600 dark:text-blue-400 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-slate-800 dark:text-white">ETL e Automação de
+                                        Dados de Cadastro</h4>
+                                    <p class="text-slate-600 dark:text-slate-300 text-sm">Americanas SA (2025)</p>
+                                </div>
+                            </div>
+                            <p class="text-slate-700 dark:text-slate-300 mb-4"> Captação de Dados espelhados do banco de
+                                dados de um sistema de cadastro,
+                                realização de ETL complexo utilizando PowerQuery e automação da Dashboard utilizando
+                                Power Automate e Sheets.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span
+                                    class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">
+                                    Excel</span>
+                                <span
+                                    class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Power
+                                    Query</span>
+                                <span
+                                    class="bg-blue+100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Power
+                                    Automate</span>
+                                <span
+                                    class="bg-blue+100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Looker
+                                    Studio</span>
+                                <span
+                                    class="bg-blue+100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Google
+                                    Sheets</span>
+                            </div>
+                            <button
+                                class="project-detail-btn w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                                data-modal="modal-projeto-2">
+                                <i class="fas fa-info-circle mr-2"></i> Ver Detalhes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold mb-8 text-slate-800 dark:text-white">
+                        <i class="fas fa-graduation-cap mr-3 text-blue-600"></i>Projetos Acadêmicos
+                    </h3>
+                    <div
+                        class="project-item bg-white dark:bg-slate-700 rounded-xl p-6 shadow-md hover:shadow-xl transform transition duration-500 hover:-translate-y-2">
+                        <div class="flex items-start mb-4">
+                            <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mr-4">
+                                <i class="fas fa-robot text-blue-600 dark:text-blue-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-slate-800 dark:text-white">Site Acadêmico MundoMed
+                                </h4>
+                                <p class="text-slate-600 dark:text-slate-300 text-sm">Projeto Acadêmico (2023)</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-700 dark:text-slate-300 mb-4">Site fictício de uma Clínica Médica com diversas especialidades.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span
+                                class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">HTML</span>
+                            <span
+                                class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">CSS</span>
+                            <span
+                                class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">JavaScript</span>
+                        </div>
+                        <button
+                            class="project-detail-btn w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                            data-modal="modal-projeto-3">
+                            <i class="fas fa-info-circle mr-2"></i> Ver Detalhes
+                        </button>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Projeto 3 -->
+                        <div id="modal-projeto-3"
+                            class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 opacity-0 invisible transition-all">
+                            <div
+                                class="modal-content relative bg-white dark:bg-slate-800 rounded-lg shadow-xl w-11/12 md:w-3/4 lg:w-2/3 max-w-4xl p-6 transform translate-y-10">
+                                <span
+                                    class="close-button absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-3xl cursor-pointer">&times;</span>
+                                <div class="flex flex-col md:flex-row gap-6">
+                                    <div class="md:w-2/5">
+                                        <img src="imagem-projeto3.jpg" alt="Detalhe Projeto 3"
+                                            class="w-full rounded-lg shadow-md">
+                                        <div class="mt-4 flex flex-wrap gap-2">
+                                            <span
+                                                class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Python</span>
+                                            <span
+                                                class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Scikit-learn</span>
+                                            <span
+                                                class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Pandas</span>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-3/5">
+                                        <h2 class="text-2xl font-bold mb-4 text-slate-800 dark:text-white">Sistema de
+                                            Recomendação de Produtos</h2>
+                                        <h3 class="text-lg font-semibold mb-2 text-slate-700 dark:text-slate-300">
+                                            Descrição do Projeto</h3>
+                                        <p class="text-slate-700 dark:text-slate-300 mb-4">Implementação de um sistema
+                                            de recomendação de produtos para um site de varejo, utilizando algoritmos de
+                                            filtragem colaborativa.</p>
+                                        <h3 class="text-lg font-semibold mb-2 text-slate-700 dark:text-slate-300">
+                                            Detalhes Técnicos</h3>
+                                        <p class="text-slate-700 dark:text-slate-300">Desenvolvi um sistema de
+                                            recomendação baseado em similaridade entre usuários (user-user collaborative
+                                            filtering) que analisava o histórico de compras e navegação dos clientes. O
+                                            algoritmo processava os dados usando a biblioteca Scikit-learn, calculando a
+                                            similaridade cosseno entre perfis de usuários.</p>
+                                        <p class="text-slate-700 dark:text-slate-300 mt-2">Para lidar com o problema de
+                                            inicialização a frio (cold start), implementei também um sistema híbrido que
+                                            complementava as recomendações com uma abordagem baseada em popularidade
+                                            para novos usuários ou produtos. O modelo foi treinado com dados históricos
+                                            de 2 anos de transações e testado usando validação cruzada.</p>
+                                        <h3 class="text-lg font-semibold mb-2 mt-4 text-slate-700 dark:text-slate-300">
+                                            Resultados</h3>
+                                        <ul class="list-disc pl-5 space-y-1 text-slate-700 dark:text-slate-300">
+                                            <li>Aumento de 5,3% na taxa de conversão de produtos recomendados</li>
+                                            <li>Redução de 12% na taxa de devoluções</li>
+                                            <li>Tempo médio de processamento de 0,8 segundos por recomendação</li>
+                                        </ul>
+                                        <div class="mt-6">
+                                            <a href="#" target="_blank"
+                                                class="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
+                                                <i class="fab fa-github mr-2"></i> Ver no GitHub
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="certificacoes" class="py-20 bg-white dark:bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-16 text-slate-800 dark:text-white">
+                    <span class="border-b-4 border-blue-600 pb-2">Certificações</span>
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Certificação 1 -->
+                    <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400"> Fast MBA - Projects |
+                            Gerenciamento de Projetos</h3>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">André Bernardo - Udemy | 2025</p>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm">Fundamentos de gerenciamento de
+                            projetos, definição e controle de cronogramas,
+                            análise e mitigação de riscos, gerenciamento de escopo e aplicação de boas práticas em
+                            metodologias ágeis.
+                        </p>
+                    </div>
+
+                    <!-- Certificação 2 -->
+                    <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400">
+                            Data Analysis with Python</h3>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">IBM - Cognitive Class | 2024
+                        </p>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm">Princípios teóricos e práticos de
+                            análise de dados com Python.<br>
+                            Aulas ministradas por cientistas de dados renomados da IBM. (Ministrado em Inglês)</p>
+                    </div>
+
+                    <!-- Certificação 3 -->
+                    <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400">Data Science 101</h3>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">IBM - Cognitive Class | 2024</p>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm">Princípios teóricos fundamentalistas
+                            da ciência de dados como um estudo profundo sobre o mundo dos dados. (Ministrado em Inglês)
+                        </p>
+                    </div>
+
+                    <!-- Certificação 4 -->
+                    <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400">Data Science Methodology
+                        </h3>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">IBM - Cognitive Class | 2024</p>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm">Passagem de metodologias aplicáveis a
+                            ciência de dados, processos e etapas realizados, até o resultado final esperado. (Ministrado
+                            em Inglês)
+                        </p>
+                    </div>
+
+                    <!-- Certificação 5 -->
+                    <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400">
+                            C# primeiros passos: Lógica de Programação e Algoritmos</h3>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">Nelio Alves - Udemy | 2024</p>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm">Lógica completa de programação,
+                            aplicação de exemplos práticos de algoritmos e introdução a linguagem de programação C#.
+                        </p>
+                    </div>
+
+                    <!-- Certificação 6 -->
+                    <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400">
+                            CC50: Introdução à Ciência da Computação - O Curso de Harvard, no Brasil</h3>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">Fundação Estudar | 2023</p>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm">Curso CS50 traduzido para o
+                            português, ministrado por David J. Malan, onde passa por capítulos de intruçao geral a
+                            computação, algoritmos, programação, história da computação, bases numéricas e estatística.
+                        </p>
+                    </div>
+
+                    <!-- Certificação 7 -->
+                    <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400">
+                            EF Standard English Test Certificate</h3>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">EF SET | 2024</p>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm">Certificado de proficiência na língua
+                            inglesa com nível atingido C1.
+                        </p>
+                    </div>
+
+                    <!-- Certificação 8 -->
+                    <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400">
+                            Curso de Soft Skills</h3>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">Prime Cursos | 2024</p>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm">Abordagem sobre habilidades pessoais
+                            no ambiênte acadêmico e profissional,
+                            como comunicação, liderança, resolução de conflitos, entre outras.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato" class="py-20 bg-gray-50 dark:bg-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-16 text-slate-800 dark:text-white">
+                    <span class="border-b-4 border-blue-600 pb-2">Contato</span>
+                </h2>
+
+                <div class="flex flex-col lg:flex-row gap-12">
+                    <div class="lg:w-1/2">
+                        <p class="text-lg mb-8 text-slate-700 dark:text-slate-300">Gostaria de discutir um projeto ou
+                            oportunidade? Entre em contato! Estou sempre aberto a novas conexões e desafios
+                            interessantes.</p>
+
+                        <div class="bg-gray-20 dark:bg-slate-700 rounded-xl p-8 shadow-lg">
+                            <div class="flex items-center mb-6">
+                                <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full mr-4">
+                                    <i class="fas fa-envelope text-blue-600 dark:text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white">E-mail</h3>
+                                    <p class="text-slate-600 dark:text-slate-400">arthurdeboni9@gmail.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center mb-6">
+                                <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full mr-4">
+                                    <i class="fas fa-phone-alt text-blue-600 dark:text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white">Telefone</h3>
+                                    <p class="text-slate-600 dark:text-slate-400">(21) +55 99489-5775</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center">
+                                <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full mr-4">
+                                    <i class="fas fa-map-marker-alt text-blue-600 dark:text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white">Localização</h3>
+                                    <p class="text-slate-600 dark:text-slate-400">Rio de Janeiro, Brasil</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 flex space-x-4">
+                            <a href="https://www.linkedin.com/in/arthur-deboni/" target="_blank"
+                                class="social-icon p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-300">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://wa.me/5521994895775" target="_blank"
+                                class="social-icon p-3 bg-green-600 hover:bg-green-700 text-white rounded-full transition-colors duration-300">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="https://github.com/deboniarthur" target="_blank"
+                                class="social-icon p-3 bg-gray-700 hover:bg-gray-800 text-white rounded-full transition-colors duration-300">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="mailto:arthurdeboni9@gmail.com" target="_blank"
+                                class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full mr-4">
+                                <i class="fas fa-envelope text-blue-600 dark:text-blue-400"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 dark:bg-slate-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold">Arthur Deboni</h3>
+                    <p class="text-slate-300">Analista de Dados</p>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#home" class="text-slate-300 hover:text-white transition-colors">Início</a>
+                    <a href="#sobre" class="text-slate-300 hover:text-white transition-colors">Sobre</a>
+                    <a href="#formacao" class="text-slate-300 hover:text-white transition-colors">Formação</a>
+                    <a href="#experiencia" class="text-slate-300 hover:text-white transition-colors">Experiência</a>
+                    <a href="#projetos" class="text-slate-300 hover:text-white transition-colors">Projetos</a>
+                    <a href="#contato" class="text-slate-300 hover:text-white transition-colors">Contato</a>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-700 mt-6 pt-6 text-center text-slate-300">
+                <p>&copy; 2025 Arthur Deboni. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modais para os Projetos -->
+    <div id="modal-projeto-1"
+        class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 opacity-0 invisible transition-all">
+        <div
+            class="modal-content relative bg-white dark:bg-slate-800 rounded-lg shadow-xl w-11/12 md:w-3/4 lg:w-2/3 max-w-4xl p-6 transform translate-y-10">
+            <span
+                class="close-button absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-3xl cursor-pointer">&times;</span>
+
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-2/5">
+                    <img src="Imagem do WhatsApp de 2025-03-18 à(s) 14.24.42_b0a20fce.jpg" alt="Detalhe Projeto 1"
+                        class="w-full rounded-lg shadow-md">
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span
+                            class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Python</span>
+                        <span
+                            class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">APIs</span>
+                        <span
+                            class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Looker</span>
+                        <span
+                            class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">ETL</span>
+                    </div>
+                </div>
+
+                <div class="md:w-3/5">
+                    <h2 class="text-2xl font-bold mb-4 text-slate-800 dark:text-white">Acompanhamento de Perfomance
+                        Interna do Time de Suprimentos</h2>
+
+                    <h3 class="text-lg font-semibold mb-2 text-slate-700 dark:text-slate-300">Descrição do Projeto</h3>
+                    <p class="text-slate-700 dark:text-slate-300 mb-4">Desenvolvimento de um conjunto de dashboards para
+                        analisar indicadores e acompanhar perfomance do time de suprimentos, utilizando Python (APIs),
+                        VBA, Excel, Sheets e Looker Studio.</p>
+
+                    <h3 class="text-lg font-semibold mb-2 text-slate-700 dark:text-slate-300">Detalhes Técnicos</h3>
+                    <p class="text-slate-700 dark:text-slate-300">Este projeto envolveu a criação de um pipeline
+                        completo de dados desde a extração das informações de várias APIs internas até a visualização em
+                        dashboards interativos. Utilizei Python para criar scripts que faziam requisições periódicas,
+                        transformavam os dados e os armazenavam em um banco de dados SQL.</p>
+                    <p class="text-slate-700 dark:text-slate-300 mt-2">Para automatizar processos adicionais,
+                        implementei macros em VBA que eram acionadas em horários específicos para gerar relatórios
+                        complementares. Os dashboards finais foram criados no Looker Studio, conectados diretamente aos
+                        bancos de dados e atualizados em tempo real.</p>
+
+                    <h3 class="text-lg font-semibold mb-2 mt-4 text-slate-700 dark:text-slate-300">Resultados</h3>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-700 dark:text-slate-300">
+                        <li>Redução de 30% no tempo de geração de relatórios semanais</li>
+                        <li>Identificação de gargalos no processo de suprimentos, resultando em economia de
+                            R$250.000/ano</li>
+                        <li>Melhoria na precisão dos dados de 78% para 98%</li>
+                    </ul>
+
+                    <div class="mt-6">
+                        <a href="#" target="_blank"
+                            class="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
+                            <i class="fab fa-github mr-2"></i> Ver no GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-projeto-2"
+        class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 opacity-0 invisible transition-all">
+        <div
+            class="modal-content relative bg-white dark:bg-slate-800 rounded-lg shadow-xl w-11/12 md:w-3/4 lg:w-2/3 max-w-4xl p-6 transform translate-y-10">
+            <span
+                class="close-button absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-3xl cursor-pointer">&times;</span>
+
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-2/5">
+                    <img src="placeholder-project2-large.jpg" alt="Detalhe Projeto 2"
+                        class="w-full rounded-lg shadow-md">
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span
+                            class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Power
+                            BI</span>
+                        <span
+                            class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">DAX</span>
+                        <span
+                            class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">SQL</span>
+                    </div>
+                </div>
+
+                <div class="md:w-3/5">
+                    <h2 class="text-2xl font-bold mb-4 text-slate-800 dark:text-white">Acompanhamento de Orçado da VP
+                    </h2>
+
+                    <h3 class="text-lg font-semibold mb-2 text-slate-700 dark:text-slate-300">Descrição do Projeto</h3>
+                    <p class="text-slate-700 dark:text-slate-300 mb-4">Criação de um dashboard em Power BI para
+                        monitoramento em tempo real das métricas de vendas de uma empresa de e-commerce.</p>
+
+                    <h3 class="text-lg font-semibold mb-2 text-slate-700 dark:text-slate-300">Detalhes Técnicos</h3>
+                    <p class="text-slate-700 dark:text-slate-300">O projeto teve como objetivo centralizar todas as
+                        métricas financeiras da vice-presidência em um único painel interativo. Desenvolvi um modelo de
+                        dados em Power BI que se conectava diretamente ao banco de dados SQL Server da empresa,
+                        atualizando os dados a cada hora.</p>
+                    <p class="text-slate-700 dark:text-slate-300 mt-2">Utilizei DAX (Data Analysis Expressions) para
+                        criar medidas complexas que calculavam variações em relação ao período anterior, cumprimento de
+                        metas e projeções baseadas em tendências históricas. Implementei também uma série de filtros
+                        dinâmicos que permitiam visualizar os dados por período, região, departamento ou produto.</p>
+
+                    <h3 class="text-lg font-semibold mb-2 mt-4 text-slate-700 dark:text-slate-300">Resultados</h3>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-700 dark:text-slate-300">
+                        <li>Centralização de 15 relatórios distintos em um único painel</li>
+                        <li>Redução de 8 horas semanais no tempo de análise da equipe financeira</li>
+                        <li>Identificação de discrepâncias que resultaram em economia de R$500.000</li>
+                    </ul>
+
+                    <div class="mt-6">
+                        <button
+                            class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg cursor-not-allowed opacity-50">
+                            <i class="fas fa-lock mr-2"></i> Código confidencial
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-projeto-3"
+        class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 opacity-0 invisible transition-all">
+        <div
+            class="modal-content relative bg-white dark:bg-slate-800 rounded-lg shadow-xl w-11/12 md:w-3/4 lg:w-2/3 max-w-4xl p-6 transform translate-y-10">
+            <span
+                class="close-button absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-3xl cursor-pointer">&times;</span>
+
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-2/5">
+                    <img src="placeholder-project3-large.jpg" alt="Detalhe Projeto 3"
+                        class="w-full rounded-lg shadow-md">
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span
+                            class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Python</span>
+                        <span
+                            class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Scikit-learn</span>
+                        <span
+                            class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-3 py-1 rounded-full">Pandas</span>
+                    </div>
+                </div>
+
+                <div class="md:w-3/5">
+                    <h2 class="text-2xl font-bold mb-4 text-slate-800 dark:text-white">Sistema de Recomendação de
+                        Produtos</h2>
+
+                    <h3 class="text-lg font-semibold mb-2 text-slate-700 dark:text-slate-300">Descrição do Projeto</h3>
+                    <p class="text-slate-700 dark:text-slate-300 mb-4">Implementação de um sistema de recomendação de
+                        produtos para um site de varejo, utilizando algoritmos de filtragem colaborativa.</p>
+
+                    <h3 class="text-lg font-semibold mb-2 text-slate-700 dark:text-slate-300">Detalhes Técnicos</h3>
+                    <p class="text-slate-700 dark:text-slate-300">Desenvolvi um sistema de recomendação baseado em
+                        similaridade entre usuários (user-user collaborative filtering) que analisava o histórico de
+                        compras e navegação dos clientes. O algoritmo processava os dados usando a biblioteca
+                        Scikit-learn, calculando a similaridade cosseno entre perfis de usuários.</p>
+                    <p class="text-slate-700 dark:text-slate-300 mt-2">Para lidar com o problema de inicialização a frio
+                        (cold start), implementei também um sistema híbrido que complementava as recomendações com uma
+                        abordagem baseada em popularidade para novos usuários ou produtos. O modelo foi treinado com
+                        dados históricos de 2 anos de transações e testado usando validação cruzada.</p>
+
+                    <h3 class="text-lg font-semibold mb-2 mt-4 text-slate-700 dark:text-slate-300">Resultados</h3>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-700 dark:text-slate-300">
+                        <li>Aumento de 5,3% na taxa de conversão de produtos recomendados</li>
+                        <li>Redução de 12% na taxa de devoluções</li>
+                        <li>Tempo médio de processamento de 0,8 segundos por recomendação</li>
+                    </ul>
+
+                    <div class="mt-6">
+                        <a href="#" target="_blank"
+                            class="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
+                            <i class="fab fa-github mr-2"></i> Ver no GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Typing effect
+        const typingText = document.getElementById('typing-text');
+        const texts = ["Olá, eu sou ", "Hello, I'm ", "Hola, soy "];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let isEnd = false;
+
+        function typeWriter() {
+            const currentText = texts[textIndex];
+
+            if (isDeleting) {
+                typingText.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingText.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentText.length) {
+                isEnd = true;
+                setTimeout(() => {
+                    isDeleting = true;
+                    setTimeout(typeWriter, 100);
+                }, 1500);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                setTimeout(typeWriter, 500);
+            } else {
+                const delay = isEnd ? 50 : 80;
+                setTimeout(typeWriter, delay);
+            }
+        }
+
+        // Initialize typing effect
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(typeWriter, 1000);
+        });
+
+        // Set initial theme from localStorage
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Mobile Menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // Adjust for fixed header
+                        behavior: 'smooth'
+                    });
+
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // Project Modals
+        const modalTriggers = document.querySelectorAll('.project-link');
+        const modals = document.querySelectorAll('.modal');
+        const closeButtons = document.querySelectorAll('.close-button');
+
+        modalTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const modalId = trigger.getAttribute('data-modal-target');
+                const modal = document.querySelector(modalId);
+
+                if (modal) {
+                    modal.classList.add('active');
+                    modal.querySelector('.modal-content').classList.add('translate-y-0');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = button.closest('.modal');
+                closeModal(modal);
+            });
+        });
+
+        modals.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal);
+                }
+            });
+        });
+
+        function closeModal(modal) {
+            modal.classList.remove('active');
+            modal.querySelector('.modal-content').classList.remove('translate-y-0');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Form submission
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // Here you would typically send the form data to a server
+                // For this example, we'll just show an alert
+                alert('Mensagem enviada com sucesso! Entrarei em contato em breve.');
+                contactForm.reset();
+            });
+        }
+
+        // Project Modal functionality
+        document.querySelectorAll('.project-detail-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const modalId = this.getAttribute('data-modal');
+                const modal = document.getElementById(modalId);
+
+                if (modal) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        document.querySelectorAll('.modal .close-button').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const modal = this.closest('.modal');
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Close modal when clicking outside content
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function (e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Scroll to top button
+        const codeElement = document.querySelector('.code');
+        if (codeElement) {
+            codeElement.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
